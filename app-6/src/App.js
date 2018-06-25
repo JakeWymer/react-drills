@@ -1,18 +1,39 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Todo from './Todo';
 
 class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      tasks: [],
+      userInput: ''
+    }
+
+    this.handleClick = this.handleClick.bind(this);
+    this.handleInput = this.handleInput.bind(this);
+  }
+
+  handleInput(e) {
+    this.setState({userInput: e.target.value});
+  }
+
+  handleClick(e) {
+    let arr = this.state.tasks.slice();
+    arr.push(this.state.userInput);
+    this.setState({tasks: arr});
+  }
+
   render() {
+
+    
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
+        <input onChange={this.handleInput}/>
+        <button onClick={this.handleClick}>Add</button>
+        <Todo tasks={this.state.tasks}/>
       </div>
     );
   }
